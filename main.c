@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <limits.h>
 #include "printf.h"
 
 /**
@@ -9,6 +10,7 @@
 int main(void)
 {
 	int real, mine;
+	unsigned int ui;
 
 	real = printf("Char:[%c]\n", 'K');
 	mine = _printf("Char:[%c]\n", 'K');
@@ -20,7 +22,12 @@ int main(void)
 	mine = _printf("Negative:[%d]\n", -1024);
 	printf("Length:[%d, %i]\n", real, real);
 	_printf("Length:[%d, %i]\n", mine, mine);
-	mine = _printf("%b", 42);
+	_printf("Binary:[%b]\n", 42);
+	ui = (unsigned int)INT_MAX + 2048;
+	printf("Unsigned:[%u]\n", ui);
+	_printf("Unsigned:[%u]\n", ui);
+	printf("Unsigned Octal:[%o]\n", ui);
+	_printf("Unsigned Octal:[%o]\n", ui);
 
 	return 0;
 }

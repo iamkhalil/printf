@@ -19,6 +19,9 @@ int (*get_fmt_func(char fmt))(va_list);
 int print_char(va_list ap);
 int print_string(va_list ap);
 int print_int(va_list ap);
+int print_unsigned_int(va_list ap);
+int print_unsigned_int_rec(unsigned int ui, unsigned int len);
+int print_octal(va_list ap);
 
 /* Custom functions */
 int print_binary(va_list ap);

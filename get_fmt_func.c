@@ -15,6 +15,8 @@ int (*get_fmt_func(char fmt))(va_list)
 		{'d', print_int},
 		{'i', print_int},
 		{'b', print_binary},
+		{'u', print_unsigned_int},
+		{'o', print_octal},
 		{'\0', NULL}
 	};
 	unsigned int i;

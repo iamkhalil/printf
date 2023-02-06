@@ -1,4 +1,5 @@
 #include "printf.h"
+#include <stdlib.h>
 
 int print_char(va_list ap)
 {
@@ -38,4 +39,42 @@ int print_int(va_list ap)
 		divisor /= 10;
 	}
 	return len;
+}
+
+int print_unsigned_int(va_list ap)
+{
+	return print_unsigned_int_rec((unsigned int)va_arg(ap, int), 0);
+}
+
+int print_unsigned_int_rec(unsigned int ui, unsigned int len)
+{
+	if (ui > 10)
+		len += print_unsigned_int_rec(ui / 10, len);
+	return len + _putchar((ui % 10) + '0');
+}
+
+int print_octal(va_list ap)
+{
+	unsigned int *arr;
+	unsigned int ui, tmp, ndigits, i;
+
+	ui = tmp = (unsigned int) va_arg(ap, int);
+	ndigits = 1;
+	while (tmp / 8) {
+		tmp /= 8;
+		++ndigits;
+	}
+	arr = malloc(sizeof(unsigned int) * ndigits);
+	if (!arr) {
+		_puts("Error: Failed to allocate memory.");
+		exit(99);
+	}
+	for (i = 0; i < ndigits; ++i) {
+		arr[i] = ui % 8;
+		ui /= 8;
+	}
+	while (i--)
+		_putchar(arr[i] + '0');
+	free(arr);
+	return ndigits;
 }
