@@ -43,7 +43,7 @@ int print_int(va_list ap)
 
 int print_unsigned_int(va_list ap)
 {
-	return print_unsigned_int_rec((unsigned int)va_arg(ap, int), 0);
+	return print_unsigned_int_rec(va_arg(ap, unsigned int), 0);
 }
 
 int print_unsigned_int_rec(unsigned int ui, unsigned int len)
@@ -53,12 +53,13 @@ int print_unsigned_int_rec(unsigned int ui, unsigned int len)
 	return len + _putchar((ui % 10) + '0');
 }
 
+//!TODO: Remove dynamic memory allocation
 int print_octal(va_list ap)
 {
 	unsigned int *arr;
 	unsigned int ui, tmp, ndigits, i;
 
-	ui = tmp = (unsigned int) va_arg(ap, int);
+	ui = tmp = va_arg(ap, unsigned int);
 	ndigits = 1;
 	while (tmp / 8) {
 		tmp /= 8;
@@ -76,5 +77,40 @@ int print_octal(va_list ap)
 	while (i--)
 		_putchar(arr[i] + '0');
 	free(arr);
+	return ndigits;
+}
+
+int print_hex_uppercase(va_list ap)
+{
+	return print_hex(va_arg(ap, unsigned int), UPPERCASE);
+}
+
+int print_hex_lowercase(va_list ap)
+{
+	return print_hex(va_arg(ap, unsigned int), LOWERCASE);
+}
+
+int print_hex(unsigned int ui, short flag)
+{
+	char buffer[8]; /* UINT_MAX == FFFFFFFF */
+	unsigned int i, padding, ndigits = 0;
+	short is_trailing_zero = 1;
+
+	padding = (flag == UPPERCASE) ? 'A' - ':' : 'a' - ':';
+	for (i = 0; i < 8; ++i) {
+		if (ui % 16 > 9)
+			buffer[i] = (ui % 16) + padding + '0';
+		else
+			buffer[i] = (ui % 16) + '0';
+		ui /= 16;
+	}
+
+	while (i--) {
+		/* Skip trailing zeros */
+		if (buffer[i] == '0' && is_trailing_zero)
+			continue;
+		is_trailing_zero = 0;
+		ndigits += _putchar(buffer[i]);
+	}
 	return ndigits;
 }

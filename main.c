@@ -28,6 +28,8 @@ int main(void)
 	_printf("Unsigned:[%u]\n", ui);
 	printf("Unsigned Octal:[%o]\n", ui);
 	_printf("Unsigned Octal:[%o]\n", ui);
+	printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
+	_printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
 
 	return 0;
 }

@@ -23,7 +23,7 @@ int _printf(const char *format, ...)
 		}
 		fn = get_fmt_func(*++format);
 		if (!fn) {
-			_puts("Error: Unknow format specifier.");
+			_puts("Error: Unknown format specifier.");
 			exit(98);
 		}
 		nbytes += (*fn)(ap);

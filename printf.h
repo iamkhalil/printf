@@ -5,13 +5,16 @@
 #include "utils.h"
 
 #define NULL ((void *)0)
+/* Flags */
+#define LOWERCASE 1
+#define UPPERCASE 2
 
 typedef struct fmt {
     char fmt;
     int (*fn)(va_list);
 } fmt_t;
 
-
+/* Function prototypes */
 int _printf(const char *format, ...);
 int (*get_fmt_func(char fmt))(va_list);
 
@@ -22,6 +25,9 @@ int print_int(va_list ap);
 int print_unsigned_int(va_list ap);
 int print_unsigned_int_rec(unsigned int ui, unsigned int len);
 int print_octal(va_list ap);
+int print_hex(unsigned int ui, short flag);
+int print_hex_uppercase(va_list ap);
+int print_hex_lowercase(va_list ap);
 
 /* Custom functions */
 int print_binary(va_list ap);
