@@ -9,7 +9,16 @@
  */
 int _putchar(char c)
 {
-	return write(1, &c, 1);
+ 	static char buffer[CAPACITY];
+	static unsigned int i;
+
+	if (i < CAPACITY && c != FLUSHBUF) {
+		buffer[i++] = c;
+	} else {
+		write(1, &buffer, i);
+		i = 0;
+	}
+	return 1;
 }
 
 /**
@@ -26,6 +35,6 @@ int _puts(char *s)
 		len += _putchar(*s);
 		++s;
 	}
-	_putchar('\n');
+	len += _putchar('\n');
 	return len;
 }

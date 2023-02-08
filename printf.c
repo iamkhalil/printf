@@ -28,6 +28,7 @@ int _printf(const char *format, ...)
 		}
 		nbytes += (*fn)(ap);
 	}
+	_putchar(FLUSHBUF); /* needed to flush the buffer used by _putchar */
 	va_end(ap);
 	return nbytes;
 }
