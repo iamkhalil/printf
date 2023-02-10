@@ -30,6 +30,7 @@ int main(void)
 	_printf("Unsigned Octal:[%o]\n", ui);
 	printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
 	_printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
+	_printf("%S\n", "Choose\r\nLife!");
 
 	return 0;
 }

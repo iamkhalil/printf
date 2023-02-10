@@ -19,6 +19,7 @@ int (*get_fmt_func(char fmt))(va_list)
 		{'o', print_octal},
 		{'x', print_hex_lowercase},
 		{'X', print_hex_uppercase},
+		{'S', print_S},
 		{'\0', NULL}
 	};
 	unsigned int i;

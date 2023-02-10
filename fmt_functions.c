@@ -96,7 +96,7 @@ int print_hex(unsigned int ui, short flag)
 	unsigned int i, padding, ndigits = 0;
 	short is_trailing_zero = 1;
 
-	padding = (flag == UPPERCASE) ? 'A' - ':' : 'a' - ':';
+	padding = (flag & UPPERCASE) ? 'A' - ':' : 'a' - ':';
 	for (i = 0; i < 8; ++i) {
 		if (ui % 16 > 9)
 			buffer[i] = (ui % 16) + padding + '0';

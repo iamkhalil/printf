@@ -32,5 +32,6 @@ int print_hex_lowercase(va_list ap);
 /* Custom functions */
 int print_binary(va_list ap);
 int print_binary_rec(unsigned int x, unsigned int len);
+int print_S(va_list ap);
 
 #endif /* PRINTF_H */
