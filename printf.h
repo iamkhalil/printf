@@ -8,7 +8,7 @@
 
 enum flags {
         LOWERCASE,
-	    UPPERCASE
+        UPPERCASE
 };
 
 typedef struct fmt {
