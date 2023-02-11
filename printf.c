@@ -10,9 +10,10 @@
  */
 int _printf(const char *format, ...)
 {
-	int (*fn)(va_list);
+	int (*fn)(va_list, const flags_t *);
 	va_list ap;
 	int nbytes = 0;
+	flags_t flags = { 0, 0 };
 
 	va_start(ap, format);
 	for (; *format; ++format) {
@@ -21,12 +22,16 @@ int _printf(const char *format, ...)
 			nbytes += _putchar(*format);
 			continue;
 		}
-		fn = get_fmt_func(*++format);
+		/* handle flags */
+		while (update_flags(&flags, *++format))
+			;
+		fn = get_fmt_func(*format);
 		if (!fn) {
 			_puts("Error: Unknown format specifier.");
 			exit(98);
 		}
-		nbytes += (*fn)(ap);
+		nbytes += (*fn)(ap, &flags);
+		reset_flags(&flags);
 	}
 	_putchar(FLUSHBUF); /* needed to flush the buffer used by _putchar */
 	va_end(ap);

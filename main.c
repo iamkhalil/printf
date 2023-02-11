@@ -37,6 +37,10 @@ int main(void)
 	addr = (void *)0x7ffe6a4241f0;
 	printf("Address:[%p]\n", addr);
 	_printf("Address:[%p]\n", addr);
+	printf("Plus flag:[%+d]\n", 42);
+	_printf("Plus flag:[%+d]\n", 42);
+	printf("Space flag:[% d]\n", 1337);
+	_printf("Space flag:[% d]\n", 1337);
 
 	return 0;
 }

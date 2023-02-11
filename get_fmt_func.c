@@ -7,7 +7,7 @@
  * Return: On success, a pointer to the function that match the format
  * specifier is returned. NULL otherwise.
  */
-int (*get_fmt_func(char fmt))(va_list)
+int (*get_fmt_func(char fmt))(va_list, const flags_t *)
 {
 	static const fmt_t map[] = {
 		{'c', print_char},
