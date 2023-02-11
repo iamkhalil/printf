@@ -11,6 +11,7 @@ int main(void)
 {
 	int real, mine;
 	unsigned int ui;
+	void *addr;
 
 	real = printf("Char:[%c]\n", 'K');
 	mine = _printf("Char:[%c]\n", 'K');
@@ -30,7 +31,12 @@ int main(void)
 	_printf("Unsigned Octal:[%o]\n", ui);
 	printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
 	_printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
-	_printf("%S\n", "Choose\r\nLife!");
+	_printf("Non-printable:[%S]\n", "Choose\r\nLife!");
+	printf("Percent:[%%]\n");
+	_printf("Percent:[%%]\n");
+	addr = (void *)0x7ffe6a4241f0;
+	printf("Address:[%p]\n", addr);
+	_printf("Address:[%p]\n", addr);
 
 	return 0;
 }

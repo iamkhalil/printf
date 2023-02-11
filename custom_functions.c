@@ -13,10 +13,11 @@ int print_binary_rec(unsigned int x, unsigned int len)
 }
 
 /**
- * print_S - Print string and convert any non-printable characters to their hex value.
+ * print_S - Print a string and convert any non-printable character to their
+ * hexadecimal value.
  * @ap: argument pointer
  *
- * Return: The number of characters written
+ * Return: The number of characters printed
  */
 int print_S(va_list ap)
 {
@@ -26,11 +27,10 @@ int print_S(va_list ap)
 	for (; *sval; ++sval) {
 		/* Convert non printable chars to hex */
 		if (*sval > 0 && (*sval < 32 || *sval >= 127)) {
-			_putchar('\\');
-			_putchar('x');
+			_puts_without_newline("\\x");
 			if (*sval <= 15)
 				_putchar('0');
-			print_hex(*sval, UPPERCASE);
+			print_hex(*sval, 1, UPPERCASE);
 			len += 4;
 			continue;
 		}

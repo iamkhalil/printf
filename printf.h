@@ -5,9 +5,11 @@
 #include "utils.h"
 
 #define NULL ((void *)0)
-/* Flags */
-#define LOWERCASE 1
-#define UPPERCASE 2
+
+enum flags {
+	LOWERCASE,
+	UPPERCASE
+};
 
 typedef struct fmt {
     char fmt;
@@ -25,9 +27,11 @@ int print_int(va_list ap);
 int print_unsigned_int(va_list ap);
 int print_unsigned_int_rec(unsigned int ui, unsigned int len);
 int print_octal(va_list ap);
-int print_hex(unsigned int ui, short flag);
+int print_hex(unsigned long ui, unsigned int size, enum flags flag);
 int print_hex_uppercase(va_list ap);
 int print_hex_lowercase(va_list ap);
+int print_percent(va_list ap);
+int print_address(va_list ap);
 
 /* Custom functions */
 int print_binary(va_list ap);

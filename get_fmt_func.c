@@ -9,7 +9,7 @@
  */
 int (*get_fmt_func(char fmt))(va_list)
 {
-	fmt_t map[] = {
+	static const fmt_t map[] = {
 		{'c', print_char},
 		{'s', print_string},
 		{'d', print_int},
@@ -20,6 +20,8 @@ int (*get_fmt_func(char fmt))(va_list)
 		{'x', print_hex_lowercase},
 		{'X', print_hex_uppercase},
 		{'S', print_S},
+		{'%', print_percent},
+		{'p', print_address},
 		{'\0', NULL}
 	};
 	unsigned int i;

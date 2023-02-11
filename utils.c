@@ -38,3 +38,12 @@ int _puts(char *s)
 	len += _putchar('\n');
 	return len;
 }
+
+int _puts_without_newline(char *s)
+{
+	int len = 0;
+
+	while (*s)
+		len += _putchar(*s++);
+	return len;
+}

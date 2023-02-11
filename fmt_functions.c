@@ -82,22 +82,22 @@ int print_octal(va_list ap)
 
 int print_hex_uppercase(va_list ap)
 {
-	return print_hex(va_arg(ap, unsigned int), UPPERCASE);
+	return print_hex(va_arg(ap, unsigned long), sizeof(unsigned long), UPPERCASE);
 }
 
 int print_hex_lowercase(va_list ap)
 {
-	return print_hex(va_arg(ap, unsigned int), LOWERCASE);
+	return print_hex(va_arg(ap, unsigned long), sizeof(unsigned long), LOWERCASE);
 }
 
-int print_hex(unsigned int ui, short flag)
+int print_hex(unsigned long ui, unsigned int size, enum flags flag)
 {
-	char buffer[8]; /* UINT_MAX == FFFFFFFF */
+	char buffer[size];
 	unsigned int i, padding, ndigits = 0;
 	short is_trailing_zero = 1;
 
 	padding = (flag & UPPERCASE) ? 'A' - ':' : 'a' - ':';
-	for (i = 0; i < 8; ++i) {
+	for (i = 0; i < size; ++i) {
 		if (ui % 16 > 9)
 			buffer[i] = (ui % 16) + padding + '0';
 		else
@@ -107,10 +107,26 @@ int print_hex(unsigned int ui, short flag)
 
 	while (i--) {
 		/* Skip trailing zeros */
-		if (buffer[i] == '0' && is_trailing_zero)
+		if (i && buffer[i] == '0' && is_trailing_zero)
 			continue;
 		is_trailing_zero = 0;
 		ndigits += _putchar(buffer[i]);
 	}
 	return ndigits;
+}
+
+int print_percent(va_list ap)
+{
+	(void)ap;
+	return _putchar('%');
+}
+
+int print_address(va_list ap)
+{
+	unsigned long addr = va_arg(ap, unsigned long);
+
+	if (!addr)
+		return _puts_without_newline("(nil)");
+	/* 16 == max number of digits needed to represent an address */
+	return _puts_without_newline("0x") + print_hex(addr, 16, LOWERCASE);
 }
