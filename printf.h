@@ -7,13 +7,13 @@
 #define NULL ((void *)0)
 
 enum flags {
-	LOWERCASE,
-	UPPERCASE
+        LOWERCASE,
+	    UPPERCASE
 };
 
 typedef struct fmt {
-    char fmt;
-    int (*fn)(va_list);
+        char fmt;
+        int (*fn)(va_list);
 } fmt_t;
 
 /* Function prototypes */
@@ -33,7 +33,7 @@ int print_hex_lowercase(va_list ap);
 int print_percent(va_list ap);
 int print_address(va_list ap);
 
-/* Custom functions */
+/* Custom format specifiers functions */
 int print_binary(va_list ap);
 int print_binary_rec(unsigned int x, unsigned int len);
 int print_S(va_list ap);
