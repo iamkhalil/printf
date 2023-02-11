@@ -20,6 +20,10 @@ int update_flags(flags_t *flags, char flag)
 		flags->is_space = 1;
 		ret = 1;
 		break;
+	case '#':
+		flags->is_hash = 1;
+		ret = 1;
+		break;
 	default:
 		ret = 0;
 		break;
@@ -34,4 +38,6 @@ int update_flags(flags_t *flags, char flag)
 void reset_flags(flags_t *flags)
 {
 	flags->is_plus  = 0;
+	flags->is_space = 0;
+	flags->is_hash  = 0;
 }

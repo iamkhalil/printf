@@ -13,7 +13,7 @@ int _printf(const char *format, ...)
 	int (*fn)(va_list, const flags_t *);
 	va_list ap;
 	int nbytes = 0;
-	flags_t flags = { 0, 0 };
+	flags_t flags = { 0, 0, 0 };
 
 	va_start(ap, format);
 	for (; *format; ++format) {

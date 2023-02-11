@@ -64,7 +64,6 @@ int print_unsigned_int_rec(unsigned int ui, unsigned int len)
 //!TODO: Remove dynamic memory allocation
 int print_octal(va_list ap, const flags_t *flags)
 {
-	(void)flags;
 	unsigned int *arr;
 	unsigned int ui, tmp, ndigits, i;
 
@@ -83,6 +82,10 @@ int print_octal(va_list ap, const flags_t *flags)
 		arr[i] = ui % 8;
 		ui /= 8;
 	}
+	if (arr[i - 1] && flags->is_hash) {
+		++ndigits;
+		_putchar('0');
+	}
 	while (i--)
 		_putchar(arr[i] + '0');
 	free(arr);
@@ -91,14 +94,22 @@ int print_octal(va_list ap, const flags_t *flags)
 
 int print_hex_uppercase(va_list ap, const flags_t *flags)
 {
-	(void)flags;
-	return print_hex(va_arg(ap, unsigned long), sizeof(long), UPPERCASE);
+	int ndigits = 0;
+
+	if (flags->is_hash)
+		ndigits += _puts_without_newline("0X");
+	ndigits += print_hex(va_arg(ap, unsigned long), sizeof(long), UPPERCASE);
+	return ndigits;
 }
 
 int print_hex_lowercase(va_list ap, const flags_t *flags)
 {
-	(void)flags;
-	return print_hex(va_arg(ap, unsigned long), sizeof(long), LOWERCASE);
+	int ndigits = 0;
+
+	if (flags->is_hash)
+		ndigits += _puts_without_newline("0x");
+	ndigits += print_hex(va_arg(ap, unsigned long), sizeof(long), LOWERCASE);
+	return ndigits;
 }
 
 int print_hex(unsigned long ui, unsigned int size, enum letcase letcase)

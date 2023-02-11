@@ -11,6 +11,7 @@ enum letcase { LOWERCASE, UPPERCASE };
 typedef struct flags {
         unsigned short is_plus   :1;
         unsigned short is_space  :1;
+        unsigned short is_hash   :1;
 } flags_t;
 
 typedef struct fmt {
@@ -41,7 +42,7 @@ int print_binary_rec(unsigned int x, unsigned int len);
 int print_S(va_list ap, const flags_t *flags);
 
 /* flags handlers */
-int update_flags(flags_t *flags, char c);
+int update_flags(flags_t *flags, char flag);
 void reset_flags(flags_t *flags);
 
 #endif /* PRINTF_H */

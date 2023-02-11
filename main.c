@@ -41,6 +41,7 @@ int main(void)
 	_printf("Plus flag:[%+d]\n", 42);
 	printf("Space flag:[% d]\n", 1337);
 	_printf("Space flag:[% d]\n", 1337);
-
+	printf("Hash flag:[%#o, %#x, %#X]\n", 7, ui, ui);
+	_printf("Hash flag:[%#o, %#x, %#X]\n", 7, ui, ui);
 	return 0;
 }
