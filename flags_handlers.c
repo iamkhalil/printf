@@ -24,6 +24,14 @@ int update_flags(flags_t *flags, char flag)
 		flags->is_hash = 1;
 		ret = 1;
 		break;
+	case 'l':
+		flags->is_l_mod = 1;
+		ret = 1;
+		break;
+	case 'h':
+		flags->is_h_mod = 1;
+		ret = 1;
+		break;
 	default:
 		ret = 0;
 		break;
@@ -40,4 +48,6 @@ void reset_flags(flags_t *flags)
 	flags->is_plus  = 0;
 	flags->is_space = 0;
 	flags->is_hash  = 0;
+	flags->is_l_mod = 0;
+	flags->is_h_mod = 0;
 }

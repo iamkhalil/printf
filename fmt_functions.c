@@ -21,13 +21,21 @@ int print_string(va_list ap, const flags_t *flags)
 
 int print_int(va_list ap, const flags_t *flags)
 {
-	int val = va_arg(ap, int);
+	long val;
 	int tmp, divisor = 1, len = 0;
+
+	/* Check length modifiers */
+	if (flags->is_h_mod)
+		val = (short) va_arg(ap, int);
+	else if (flags->is_l_mod)
+		val = va_arg(ap, long);
+	else
+		val = va_arg(ap, int);
 
 	if (val < 0) {
 		len += _putchar('-');
 		val = -val;
-	} else {
+	} else { /* Check flags */
 		if (flags->is_plus)
 			len += _putchar('+');
 		else if (flags->is_space)
@@ -65,15 +73,23 @@ int print_unsigned_int_rec(unsigned int ui, unsigned int len)
 int print_octal(va_list ap, const flags_t *flags)
 {
 	unsigned int *arr;
-	unsigned int ui, tmp, ndigits, i;
+	unsigned long ui, tmp;
+	short ndigits = 1, i;
 
-	ui = tmp = va_arg(ap, unsigned int);
-	ndigits = 1;
+	/* Check length modifiers */
+	if (flags->is_h_mod)
+		ui = (unsigned short) va_arg(ap, unsigned int);
+	else if (flags->is_l_mod)
+		ui = va_arg(ap, unsigned long);
+	else
+		ui = va_arg(ap, unsigned int);
+
+	tmp = ui;
 	while (tmp / 8) {
 		tmp /= 8;
 		++ndigits;
 	}
-	arr = malloc(sizeof(unsigned int) * ndigits);
+	arr = malloc(sizeof(ui) * ndigits);
 	if (!arr) {
 		_puts("Error: Failed to allocate memory.");
 		exit(99);
@@ -95,20 +111,40 @@ int print_octal(va_list ap, const flags_t *flags)
 int print_hex_uppercase(va_list ap, const flags_t *flags)
 {
 	int ndigits = 0;
+	unsigned long val;
 
+	/* Check flags */
 	if (flags->is_hash)
 		ndigits += _puts_without_newline("0X");
-	ndigits += print_hex(va_arg(ap, unsigned long), sizeof(long), UPPERCASE);
+	/* Check length modifiers */
+	if (flags->is_h_mod)
+		val = (unsigned short) va_arg(ap, unsigned int);
+	else if (flags->is_l_mod)
+		val = va_arg(ap, unsigned long);
+	else
+		val = va_arg(ap, unsigned int);
+
+	ndigits += print_hex(val, 16, UPPERCASE);
 	return ndigits;
 }
 
 int print_hex_lowercase(va_list ap, const flags_t *flags)
 {
 	int ndigits = 0;
+	unsigned long val;
 
+	/* Check flags */
 	if (flags->is_hash)
 		ndigits += _puts_without_newline("0x");
-	ndigits += print_hex(va_arg(ap, unsigned long), sizeof(long), LOWERCASE);
+	/* Check length modifiers */
+	if (flags->is_h_mod)
+		val = (unsigned short) va_arg(ap, unsigned int);
+	else if (flags->is_l_mod)
+		val = va_arg(ap, unsigned long);
+	else
+		val = va_arg(ap, unsigned int);
+
+	ndigits += print_hex(val, 16, LOWERCASE);
 	return ndigits;
 }
 

@@ -9,9 +9,13 @@
 enum letcase { LOWERCASE, UPPERCASE };
 
 typedef struct flags {
+        /* Flags */
         unsigned short is_plus   :1;
         unsigned short is_space  :1;
         unsigned short is_hash   :1;
+        /* Length modifiers */
+        unsigned short is_l_mod  :1;
+        unsigned short is_h_mod  :1;
 } flags_t;
 
 typedef struct fmt {
