@@ -32,7 +32,7 @@ int print_char(va_list ap, const flags_t *flags);
 int print_string(va_list ap, const flags_t *flags);
 int print_int(va_list ap, const flags_t *flags);
 int print_unsigned_int(va_list ap, const flags_t *flags);
-int print_unsigned_int_rec(unsigned int ui, unsigned int len);
+int print_unsigned_int_rec(unsigned long ui, unsigned int len);
 int print_octal(va_list ap, const flags_t *flags);
 int print_hex(unsigned long ui, unsigned int size, enum letcase letcase);
 int print_hex_uppercase(va_list ap, const flags_t *flags);

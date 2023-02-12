@@ -51,16 +51,16 @@ int main(void)
 	_printf("Signed length modifier <l>:[%ld, %li]\n", (long)INT_MAX, (long)INT_MAX);
 	printf("Signed length modifier <l>:[%ld, %li]\n", ULONG_MAX, ULONG_MAX);
 	_printf("Signed length modifier <l>:[%ld, %li]\n", ULONG_MAX, ULONG_MAX);
-	printf("Unsigned length modifier <h>:[%hx, %hX, %ho]\n", UINT_MAX, UINT_MAX, UINT_MAX);
-	_printf("Unsigned length modifier <h>:[%hx, %hX, %ho]\n", UINT_MAX, UINT_MAX, UINT_MAX);
-	printf("Unsigned length modifier <h>:[%hx, %hX, %ho]\n", USHRT_MAX, USHRT_MAX, USHRT_MAX);
-	_printf("Unsigned length modifier <h>:[%hx, %hX, %ho]\n", USHRT_MAX, USHRT_MAX, USHRT_MAX);
-	printf("Unsigned length modifier <l>:[%lx, %lX, %lo]\n", ULONG_MAX, ULONG_MAX, ULONG_MAX);
-	_printf("Unsigned length modifier <l>:[%lx, %lX, %lo]\n", ULONG_MAX, ULONG_MAX, ULONG_MAX);
-	printf("Unsigned length modifier <l>:[%lx, %lX, %lo]\n", (unsigned long)INT_MIN, (unsigned long)INT_MIN,
-								 (unsigned long)INT_MIN);
-	_printf("Unsigned length modifier <l>:[%lx, %lX, %lo]\n",(unsigned long)INT_MIN, (unsigned long)INT_MIN,
-								 (unsigned long)INT_MIN);
+	printf("Unsigned length modifier <h>:[%hx, %hX, %ho, %hu]\n", UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX);
+	_printf("Unsigned length modifier <h>:[%hx, %hX, %ho, %hu]\n", UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX);
+	printf("Unsigned length modifier <h>:[%hx, %hX, %ho, %hu]\n", USHRT_MAX, USHRT_MAX, USHRT_MAX, USHRT_MAX);
+	_printf("Unsigned length modifier <h>:[%hx, %hX, %ho, %hu]\n", USHRT_MAX, USHRT_MAX, USHRT_MAX, USHRT_MAX);
+	printf("Unsigned length modifier <l>:[%lx, %lX, %lo, %lu]\n", ULONG_MAX, ULONG_MAX, ULONG_MAX, ULONG_MAX);
+	_printf("Unsigned length modifier <l>:[%lx, %lX, %lo, %lu]\n", ULONG_MAX, ULONG_MAX, ULONG_MAX, ULONG_MAX);
+	printf("Unsigned length modifier <l>:[%lx, %lX, %lo, %lu]\n", (unsigned long)INT_MIN, (unsigned long)INT_MIN,
+								      (unsigned long)INT_MIN,(unsigned long)INT_MIN);
+	_printf("Unsigned length modifier <l>:[%lx, %lX, %lo, %lu]\n",(unsigned long)INT_MIN, (unsigned long)INT_MIN,
+								      (unsigned long)INT_MIN, (unsigned long)INT_MIN);
 
 	return 0;
 }

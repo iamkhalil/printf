@@ -58,11 +58,19 @@ int print_int(va_list ap, const flags_t *flags)
 
 int print_unsigned_int(va_list ap, const flags_t *flags)
 {
-	(void)flags;
-	return print_unsigned_int_rec(va_arg(ap, unsigned int), 0);
+	unsigned long val;
+
+	if (flags->is_h_mod)
+		val = (unsigned short) va_arg(ap, unsigned int);
+	else if (flags->is_l_mod)
+		val = va_arg(ap, unsigned long);
+	else
+		val = va_arg(ap, unsigned int);
+
+	return print_unsigned_int_rec(val, 0);
 }
 
-int print_unsigned_int_rec(unsigned int ui, unsigned int len)
+int print_unsigned_int_rec(unsigned long ui, unsigned int len)
 {
 	if (ui > 10)
 		len += print_unsigned_int_rec(ui / 10, len);
