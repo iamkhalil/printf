@@ -8,7 +8,9 @@
 
 enum letcase { LOWERCASE, UPPERCASE };
 
-typedef struct flags {
+typedef struct fields {
+        /* Width */
+        int width;
         /* Flags */
         unsigned short is_plus   :1;
         unsigned short is_space  :1;
@@ -16,37 +18,39 @@ typedef struct flags {
         /* Length modifiers */
         unsigned short is_l_mod  :1;
         unsigned short is_h_mod  :1;
-} flags_t;
+} fields_t;
 
 typedef struct fmt {
         char fmt;
-        int (*fn)(va_list, const flags_t *);
+        int (*fn)(va_list, const fields_t *);
 } fmt_t;
 
 /* Function prototypes */
 int _printf(const char *format, ...);
-int (*get_fmt_func(char fmt))(va_list, const flags_t *);
+int (*get_fmt_func(char fmt))(va_list, const fields_t *);
 
 /* Format specifiers functions */
-int print_char(va_list ap, const flags_t *flags);
-int print_string(va_list ap, const flags_t *flags);
-int print_int(va_list ap, const flags_t *flags);
-int print_unsigned_int(va_list ap, const flags_t *flags);
+int print_char(va_list ap, const fields_t *fields);
+int print_string(va_list ap, const fields_t *fields);
+int print_int(va_list ap, const fields_t *fields);
+int print_unsigned_int(va_list ap, const fields_t *fields);
 int print_unsigned_int_rec(unsigned long ui, unsigned int len);
-int print_octal(va_list ap, const flags_t *flags);
-int print_hex(unsigned long ui, unsigned int size, enum letcase letcase);
-int print_hex_uppercase(va_list ap, const flags_t *flags);
-int print_hex_lowercase(va_list ap, const flags_t *flags);
-int print_percent(va_list ap, const flags_t *flags);
-int print_address(va_list ap, const flags_t *flags);
+int print_octal(va_list ap, const fields_t *fields);
+int print_hex(unsigned long ui, unsigned int size, enum letcase letcase, const fields_t *fields);
+int print_hex_uppercase(va_list ap, const fields_t *fields);
+int print_hex_lowercase(va_list ap, const fields_t *fields);
+int print_percent(va_list ap, const fields_t *fields);
+int print_address(va_list ap, const fields_t *fields);
 
 /* Custom format specifiers functions */
-int print_binary(va_list ap, const flags_t *flags);
+int print_binary(va_list ap, const fields_t *fields);
 int print_binary_rec(unsigned int x, unsigned int len);
-int print_S(va_list ap, const flags_t *flags);
+int print_S(va_list ap, const fields_t *fields);
 
-/* flags handlers */
-int update_flags(flags_t *flags, char flag);
-void reset_flags(flags_t *flags);
+/* fields handlers */
+int update_flags(fields_t *fields, char flag);
+int update_length_modifiers(fields_t *fields, char mod);
+int update_width(fields_t *fields, va_list ap, const char * const s);
+void reset_fields(fields_t *fields);
 
 #endif /* PRINTF_H */

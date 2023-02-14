@@ -1,8 +1,8 @@
 #include "printf.h"
 
-int print_binary(va_list ap, const flags_t *flags)
+int print_binary(va_list ap, const fields_t *fields)
 {
-	(void)flags;
+	(void)fields;
 	return print_binary_rec(va_arg(ap, int), 0);
 }
 
@@ -20,9 +20,8 @@ int print_binary_rec(unsigned int x, unsigned int len)
  *
  * Return: The number of characters printed
  */
-int print_S(va_list ap, const flags_t *flags)
+int print_S(va_list ap, const fields_t *fields)
 {
-	(void)flags;
 	char *sval = va_arg(ap, char *);
 	unsigned int len = 0;
 
@@ -32,7 +31,7 @@ int print_S(va_list ap, const flags_t *flags)
 			_puts_without_newline("\\x");
 			if (*sval <= 15)
 				_putchar('0');
-			print_hex(*sval, 1, UPPERCASE);
+			print_hex(*sval, 1, UPPERCASE, fields);
 			len += 4;
 			continue;
 		}

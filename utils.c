@@ -47,3 +47,18 @@ int _puts_without_newline(char *s)
 		len += _putchar(*s++);
 	return len;
 }
+
+/**
+ * _strlen - Calculate the length of a string
+ * @s: the given string
+ *
+ * Return: The length of s
+ */
+unsigned int _strlen(const char *s)
+{
+	const char *sp = s;
+
+	while (*sp)
+		++sp;
+	return sp - s;
+}

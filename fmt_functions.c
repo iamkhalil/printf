@@ -1,73 +1,98 @@
 #include "printf.h"
 #include <stdlib.h>
 
-int print_char(va_list ap, const flags_t *flags)
+int print_char(va_list ap, const fields_t *fields)
 {
-	(void)flags;
-	return _putchar(va_arg(ap, int));
+	int i;
+
+	for (i = 0; i < fields->width - 1; ++i)
+		_putchar(' ');
+	return i + _putchar(va_arg(ap, int));
 }
 
-int print_string(va_list ap, const flags_t *flags)
+int print_string(va_list ap, const fields_t *fields)
 {
-	(void)flags;
-	char *sval;
-	int len = 0;
+	char *sval = va_arg(ap, char *);
+	int len;
 
-	for (sval = va_arg(ap, char *); *sval; ++sval) {
-		len += _putchar(*sval);
-	}
+	for (len = _strlen(sval); len < fields->width; ++len)
+		_putchar(' ');
+	while (*sval)
+		_putchar(*sval++);
 	return len;
 }
 
-int print_int(va_list ap, const flags_t *flags)
+int print_int(va_list ap, const fields_t *fields)
 {
 	long val;
-	int tmp, divisor = 1, len = 0;
+	int tmp, divisor = 1, len = 1;
 
 	/* Check length modifiers */
-	if (flags->is_h_mod)
+	if (fields->is_h_mod)
 		val = (short) va_arg(ap, int);
-	else if (flags->is_l_mod)
+	else if (fields->is_l_mod)
 		val = va_arg(ap, long);
 	else
 		val = va_arg(ap, int);
 
-	if (val < 0) {
-		len += _putchar('-');
-		val = -val;
-	} else { /* Check flags */
-		if (flags->is_plus)
-			len += _putchar('+');
-		else if (flags->is_space)
-			len += _putchar(' ');
-	}
-
-	tmp = val;
+	tmp = (val < 0) ? -val : val;
 	while (tmp / 10) {
 		tmp /= 10;
 		divisor *= 10;
+		++len;
+	}
+
+	/* Check width */
+	len += (fields->is_plus | fields->is_space);
+	tmp = fields->width;
+	while (tmp-- > len)
+		_putchar(' ');
+	len += (fields->width > len) ? fields->width - len : 0;
+
+	/* Check flags */
+	if (val < 0) {
+		len += _putchar('-');
+		/* '+' flag should not be taken into account when val < 0 */
+		if (fields->is_plus)
+			--len;
+		val = -val;
+	} else {
+		if (fields->is_plus)
+			_putchar('+');
+		else if (fields->is_space)
+			_putchar(' ');
 	}
 
 	while (divisor) {
-		len += _putchar((val / divisor) + '0');
+		_putchar((val / divisor) + '0');
 		val %= divisor;
 		divisor /= 10;
 	}
 	return len;
 }
 
-int print_unsigned_int(va_list ap, const flags_t *flags)
+int print_unsigned_int(va_list ap, const fields_t *fields)
 {
-	unsigned long val;
+	unsigned long val, tmp;
+	int ndigits = 1, len = 0;
 
-	if (flags->is_h_mod)
+	if (fields->is_h_mod)
 		val = (unsigned short) va_arg(ap, unsigned int);
-	else if (flags->is_l_mod)
+	else if (fields->is_l_mod)
 		val = va_arg(ap, unsigned long);
 	else
 		val = va_arg(ap, unsigned int);
 
-	return print_unsigned_int_rec(val, 0);
+	tmp = val;
+	while (tmp / 10) {
+		tmp /= 10;
+		++ndigits;
+	}
+	tmp = fields->width;
+	while ((int)tmp-- > ndigits)
+		len += _putchar(' ');
+
+	return len + print_unsigned_int_rec(val, 0);
 }
 
 int print_unsigned_int_rec(unsigned long ui, unsigned int len)
@@ -77,17 +102,17 @@ int print_unsigned_int_rec(unsigned long ui, unsigned int len)
 	return len + _putchar((ui % 10) + '0');
 }
 
-//!TODO: Remove dynamic memory allocation
-int print_octal(va_list ap, const flags_t *flags)
+// FIXME: Remove dynamic memory allocation
+int print_octal(va_list ap, const fields_t *fields)
 {
 	unsigned int *arr;
 	unsigned long ui, tmp;
-	short ndigits = 1, i;
+	short ndigits = 1, i, len = 0;
 
 	/* Check length modifiers */
-	if (flags->is_h_mod)
+	if (fields->is_h_mod)
 		ui = (unsigned short) va_arg(ap, unsigned int);
-	else if (flags->is_l_mod)
+	else if (fields->is_l_mod)
 		ui = va_arg(ap, unsigned long);
 	else
 		ui = va_arg(ap, unsigned int);
@@ -97,6 +122,12 @@ int print_octal(va_list ap, const flags_t *flags)
 		tmp /= 8;
 		++ndigits;
 	}
+
+	/* Check width */
+	tmp = fields->width;
+	while ((int)tmp-- > ndigits)
+		len += _putchar(' ');
+
 	arr = malloc(sizeof(ui) * ndigits);
 	if (!arr) {
 		_puts("Error: Failed to allocate memory.");
@@ -106,61 +137,62 @@ int print_octal(va_list ap, const flags_t *flags)
 		arr[i] = ui % 8;
 		ui /= 8;
 	}
-	if (arr[i - 1] && flags->is_hash) {
+	if (arr[i - 1] && fields->is_hash) {
 		++ndigits;
 		_putchar('0');
 	}
 	while (i--)
 		_putchar(arr[i] + '0');
 	free(arr);
-	return ndigits;
+	return len + ndigits;
 }
 
-int print_hex_uppercase(va_list ap, const flags_t *flags)
+int print_hex_uppercase(va_list ap, const fields_t *fields)
 {
 	int ndigits = 0;
 	unsigned long val;
 
 	/* Check flags */
-	if (flags->is_hash)
+	if (fields->is_hash)
 		ndigits += _puts_without_newline("0X");
 	/* Check length modifiers */
-	if (flags->is_h_mod)
+	if (fields->is_h_mod)
 		val = (unsigned short) va_arg(ap, unsigned int);
-	else if (flags->is_l_mod)
+	else if (fields->is_l_mod)
 		val = va_arg(ap, unsigned long);
 	else
 		val = va_arg(ap, unsigned int);
 
-	ndigits += print_hex(val, 16, UPPERCASE);
+	ndigits += print_hex(val, 16, UPPERCASE, fields);
 	return ndigits;
 }
 
-int print_hex_lowercase(va_list ap, const flags_t *flags)
+int print_hex_lowercase(va_list ap, const fields_t *fields)
 {
 	int ndigits = 0;
 	unsigned long val;
 
 	/* Check flags */
-	if (flags->is_hash)
+	if (fields->is_hash)
 		ndigits += _puts_without_newline("0x");
 	/* Check length modifiers */
-	if (flags->is_h_mod)
+	if (fields->is_h_mod)
 		val = (unsigned short) va_arg(ap, unsigned int);
-	else if (flags->is_l_mod)
+	else if (fields->is_l_mod)
 		val = va_arg(ap, unsigned long);
 	else
 		val = va_arg(ap, unsigned int);
 
-	ndigits += print_hex(val, 16, LOWERCASE);
+	ndigits += print_hex(val, 16, LOWERCASE, fields);
 	return ndigits;
 }
 
-int print_hex(unsigned long ui, unsigned int size, enum letcase letcase)
+int print_hex(unsigned long ui, unsigned int size, enum letcase letcase, const fields_t *fields)
 {
 	char buffer[size];
 	unsigned int i, padding, ndigits = 0;
 	short is_trailing_zero = 1;
+	int len = 0, tmp;
 
 	padding = (letcase & UPPERCASE) ? 'A' - ':' : 'a' - ':';
 	for (i = 0; i < size; ++i) {
@@ -170,7 +202,14 @@ int print_hex(unsigned long ui, unsigned int size, enum letcase letcase)
 			buffer[i] = (ui % 16) + '0';
 		ui /= 16;
 	}
+	/* Check width */
+	for (i = size - 1; buffer[i] == '0'; --i)
+		;
+	tmp = fields->width;
+	while (--tmp > (int)i)
+		len += _putchar(' ');
 
+	i = size;
 	while (i--) {
 		/* Skip trailing zeros */
 		if (i && buffer[i] == '0' && is_trailing_zero)
@@ -178,23 +217,22 @@ int print_hex(unsigned long ui, unsigned int size, enum letcase letcase)
 		is_trailing_zero = 0;
 		ndigits += _putchar(buffer[i]);
 	}
-	return ndigits;
+	return len + ndigits;
 }
 
-int print_percent(va_list ap, const flags_t *flags)
+int print_percent(va_list ap, const fields_t *fields)
 {
 	(void)ap;
-	(void)flags;
+	(void)fields;
 	return _putchar('%');
 }
 
-int print_address(va_list ap, const flags_t *flags)
+int print_address(va_list ap, const fields_t *fields)
 {
-	(void)flags;
 	unsigned long addr = va_arg(ap, unsigned long);
 
 	if (!addr)
 		return _puts_without_newline("(nil)");
 	/* 16 == max number of digits needed to represent an address */
-	return _puts_without_newline("0x") + print_hex(addr, 16, LOWERCASE);
+	return _puts_without_newline("0x") + print_hex(addr, 16, LOWERCASE, fields);
 }
