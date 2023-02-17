@@ -1,7 +1,7 @@
 #include "printf.h"
 
 /**
- * update_flags - Update a flag of the struct fields when it matches a flag.
+ * update_flags - Update a flag from the struct fields when it matches a flag.
  * @fields: pointer to a struct fields
  * @flag: the given flag
  *

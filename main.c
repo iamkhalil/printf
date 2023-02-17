@@ -79,7 +79,7 @@ int main(void)
 	real = printf("Signed int width:[%4d]\n", 42);
 	mine = _printf("Signed int width:[%4d]\n", 42);
 	printf("Length:[%d, %d]\n", real, mine);
-	real = printf("Signed int width:[%+3d@\n", 42);
+	real = printf("Signed int width:[%+3d]\n", 42);
 	mine = _printf("Signed int width:[%+3d]\n", 42);
 	printf("Length:[%d, %d]\n", real, mine);
 	real = printf("Signed int width:[% 3d]\n", 42);
@@ -107,6 +107,9 @@ int main(void)
 	mine = _printf("Unsigned octal width:[%2o]\n", 1);
 	real = printf("Unsigned hexadecimal width:[%4x, %4X]\n", 10, 7);
 	mine = _printf("Unsigned hexadecimal width:[%4x, %4X]\n", 10, 7);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Unsigned octal mix:[%#3o]\n", 7);
+	mine = _printf("Unsigned octal mix:[%#3o]\n", 7);
 	printf("Length:[%d, %d]\n", real, mine);
 
 	return 0;

@@ -9,8 +9,6 @@
 enum letcase { LOWERCASE, UPPERCASE };
 
 typedef struct fields {
-        /* Width */
-        int width;
         /* Flags */
         unsigned short is_plus   :1;
         unsigned short is_space  :1;
@@ -18,6 +16,8 @@ typedef struct fields {
         /* Length modifiers */
         unsigned short is_l_mod  :1;
         unsigned short is_h_mod  :1;
+        /* Width */
+        int width;
 } fields_t;
 
 typedef struct fmt {

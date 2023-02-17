@@ -9,10 +9,10 @@
  */
 int _putchar(char c)
 {
- 	static char buffer[CAPACITY];
+ 	static char buffer[BUFSIZE];
 	static unsigned int i;
 
-	if (i < CAPACITY && c != FLUSHBUF) {
+	if (i < BUFSIZE && c != FLUSHBUF) {
 		buffer[i++] = c;
 	} else {
 		write(1, &buffer, i);
@@ -61,4 +61,63 @@ unsigned int _strlen(const char *s)
 	while (*sp)
 		++sp;
 	return sp - s;
+}
+
+/**
+ * convert_number - Convert a number from one base to another.
+ * @res: pointer to the resulting number
+ * @n: the number to convert
+ * @base: the desired base (decimal, octal)
+ *
+ * Result: pointer to the resulting number res
+ */
+char *convert_number(char *res, unsigned long n, unsigned short base)
+{
+	char number[CAPACITY] = { '\0' };
+	unsigned short i;
+
+	i = 0;
+	while (n / base) {
+		number[i++] = n % base + '0';
+		n /= base;
+	}
+	number[i] = n % base + '0';
+	reverse_array(number, i + 1);
+	return _strncpy(res, number, i + 1);
+}
+
+/**
+ * reverse_array - Reverse an array of characters
+ * @arr: the given array
+ * @size: size of arr
+ */
+void reverse_array(char *arr, unsigned int size)
+{
+	unsigned int i;
+	char tmp;
+
+	for (i = 0; i < size / 2; ++i) {
+		tmp = arr[i];
+		arr[i] = arr[size - i - 1];
+		arr[size - i - 1] = tmp;
+	}
+}
+
+/**
+ * _strncpy - Copie at most n bytes from src to dest
+ * @dest: pointer to the destination string
+ * @src: pointer to the source string
+ * @n: number of bytes
+ *
+ * Return: pointer to the resulting string dest
+ */
+char *_strncpy(char *dest, const char *src, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n && src[i]; ++i)
+		dest[i] = src[i];
+	for (; i < n; ++i)
+		dest[i] = '\0';
+	return dest;
 }

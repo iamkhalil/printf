@@ -22,14 +22,10 @@ int _printf(const char *format, ...)
 			nchars += _putchar(*format);
 			continue;
 		}
-		/* handle flags */
 		while (update_flags(&fields, *++format))
 			;
-		/* handle width */
 		format += update_width(&fields, ap, format);
-		/* handle length modifiers */
 		format += update_length_modifiers(&fields, *format);
-		/* get specifier function */
 		fn = get_fmt_func(*format);
 		if (!fn) {
 			_puts("Error: Unknown format specifier.");
