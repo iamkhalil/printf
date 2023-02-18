@@ -15,6 +15,8 @@ int main(void)
 
 	real = printf("Char:[%c]\n", 'K');
 	mine = _printf("Char:[%c]\n", 'K');
+	printf("Length:[%d, %i]\n", real, real);
+	_printf("Length:[%d, %i]\n", mine, mine);
 	real = printf("String:[%s]\n", "Hello, world!");
 	mine = _printf("String:[%s]\n", "Hello, world!");
 	printf("Length:[%d, %i]\n", real, real);
@@ -108,8 +110,23 @@ int main(void)
 	real = printf("Unsigned hexadecimal width:[%4x, %4X]\n", 10, 7);
 	mine = _printf("Unsigned hexadecimal width:[%4x, %4X]\n", 10, 7);
 	printf("Length:[%d, %d]\n", real, mine);
-	real = printf("Unsigned octal mix:[%#3o]\n", 7);
-	mine = _printf("Unsigned octal mix:[%#3o]\n", 7);
+	real = printf("Unsigned octal and flags:[%#3o]\n", 7);
+	mine = _printf("Unsigned octal and flags:[%#3o]\n", 7);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("String precision <n>:[%.2s]\n", "123456789");
+	mine = _printf("String precision <n>:[%.2s]\n", "123456789");
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("String precision <*>:[%.*s]\n", 2, "123456789");
+	mine = _printf("String precision <*>:[%.*s]\n", 2, "123456789");
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("String precision:[%.s]\n", "123456789");
+	mine = _printf("String precision:[%.s]\n", "123456789");
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("String precision and width:[%12.6s]\n", "123456789");
+	mine = _printf("String precision and width:[%12.6s]\n", "123456789");
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("String precision and width:[%4.6s]\n", "123456789");
+	mine = _printf("String precision and width:[%4.6s]\n", "123456789");
 	printf("Length:[%d, %d]\n", real, mine);
 
 	return 0;

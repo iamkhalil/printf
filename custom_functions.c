@@ -24,7 +24,7 @@ int print_S(va_list ap, const fields_t *fields)
 {
 	(void)fields;
 	char *sval = va_arg(ap, char *);
-	int len = 0, pad;
+	int len = 0, offset;
 
 	for (; *sval; ++sval) {
 		/* Convert non printable chars to hex */
@@ -32,8 +32,8 @@ int print_S(va_list ap, const fields_t *fields)
 			_puts_without_newline("\\x");
 			if (*sval <= 15)
 				_putchar('0');
-			pad = (*sval < 10) ? 0 : 'A' - ':';
-			_putchar(*sval + '0' + pad);
+			offset = (*sval < 10) ? 0 : 'A' - ':';
+			_putchar(*sval + '0' + offset);
 			len += 4;
 			continue;
 		}

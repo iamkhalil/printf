@@ -63,6 +63,7 @@ int update_length_modifiers(fields_t *fields, char mod)
  * update_width - Get the width number, and update the width member of the
  * struct fields.
  * @fields: pointer to a struct fields
+ * @ap: argument pointer
  * @s: pointer to character string
  *
  * Return: number of characters that format has to skip.
@@ -84,15 +85,45 @@ int update_width(fields_t *fields, va_list ap, const char * const s)
 }
 
 /**
+ * update_precision - update the precision member of the struct fields.
+ * @fields: pointer to a struct fields
+ * @ap: argument pointer
+ * @s: pointer to a string
+ *
+ * Return: number of characters that format has to skip.
+ */
+int update_precision(fields_t *fields, va_list ap, const char * const s)
+{
+	const char *sp = s;
+	unsigned int precision = 0;
+
+	if (*sp != '.')
+		return 0;
+
+	if (*++sp == '*') {
+		precision = va_arg(ap, unsigned int);
+		++sp;
+	} else if (*sp >= '0' && *sp <= '9') { /* number */
+		while (*sp >= '0' && *sp <= '9')
+			precision = (precision * 10) + (*sp++ - '0');
+	} else {
+		/* assume zero if no explicit value is provided */
+	}
+	fields->precision = precision;
+	return sp - s;
+}
+
+/**
  * reset_fields - Reset the values of all struct fields members to zero.
  * @fields: pointer to a struct fields
  */
 void reset_fields(fields_t *fields)
 {
-	fields->is_plus  = 0;
-	fields->is_space = 0;
-	fields->is_hash  = 0;
-	fields->is_l_mod = 0;
-	fields->is_h_mod = 0;
-	fields->width	 = 0;
+	fields->is_plus	  = 0;
+	fields->is_space  = 0;
+	fields->is_hash   = 0;
+	fields->is_l_mod  = 0;
+	fields->is_h_mod  = 0;
+	fields->width	  = 0;
+	fields->precision = UINT_MAX;
 }

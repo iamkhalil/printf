@@ -2,6 +2,7 @@
 #define PRINTF_H
 
 #include <stdarg.h>
+#include <limits.h>
 #include "utils.h"
 
 #define NULL ((void *)0)
@@ -15,7 +16,9 @@ typedef struct fields {
         unsigned short is_l_mod  :1;
         unsigned short is_h_mod  :1;
         /* Width */
-        int width;
+        unsigned int width;
+        /* Precision */
+        unsigned int precision;
 } fields_t;
 
 typedef struct fmt {
@@ -49,6 +52,7 @@ int print_S(va_list ap, const fields_t *fields);
 int update_flags(fields_t *fields, char flag);
 int update_length_modifiers(fields_t *fields, char mod);
 int update_width(fields_t *fields, va_list ap, const char * const s);
+int update_precision(fields_t *fields, va_list ap, const char * const s);
 void reset_fields(fields_t *fields);
 
 #endif /* PRINTF_H */

@@ -13,7 +13,7 @@ int _printf(const char *format, ...)
 	int (*fn)(va_list, const fields_t *);
 	va_list ap;
 	int nchars = 0;
-	fields_t fields = { 0, 0, 0, 0, 0, 0 };
+	fields_t fields = { 0, 0, 0, 0, 0, 0, UINT_MAX };
 
 	va_start(ap, format);
 	for (; *format; ++format) {
@@ -25,6 +25,7 @@ int _printf(const char *format, ...)
 		while (update_flags(&fields, *++format))
 			;
 		format += update_width(&fields, ap, format);
+		format += update_precision(&fields, ap, format);
 		format += update_length_modifiers(&fields, *format);
 		fn = get_fmt_func(*format);
 		if (!fn) {

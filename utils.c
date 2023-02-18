@@ -74,15 +74,15 @@ unsigned int _strlen(const char *s)
 char *convert_number(char *res, unsigned long n, unsigned short base, enum letcase letcase)
 {
 	char number[CAPACITY] = { '\0' };
-	unsigned short i, padding;
+	unsigned short i, offset;
 
 	i = 0;
-	padding = (letcase & UPPERCASE) ? 'A' - ':' : 'a' - ':';
+	offset = (letcase & UPPERCASE) ? 'A' - ':' : 'a' - ':';
 	while (n / base) {
-		number[i++] = (n % base < 10) ? n % base + '0' : n % base + padding + '0';
+		number[i++] = (n % base < 10) ? n % base + '0' : n % base + offset + '0';
 		n /= base;
 	}
-	number[i] = (n % base < 10) ? n % base + '0' : n % base + padding + '0';
+	number[i] = (n % base < 10) ? n % base + '0' : n % base + offset + '0';
 	reverse_array(number, i + 1);
 	return _strncpy(res, number, i + 1);
 }

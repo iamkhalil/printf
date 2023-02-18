@@ -1,11 +1,11 @@
 #include "printf.h"
 #include <stdlib.h>
-
+#include <stdio.h>
 int print_char(va_list ap, const fields_t *fields)
 {
 	int i;
 
-	for (i = 0; i < fields->width - 1; ++i)
+	for (i = 0; i < (int) fields->width - 1; ++i)
 		_putchar(' ');
 	return i + _putchar(va_arg(ap, int));
 }
@@ -13,12 +13,20 @@ int print_char(va_list ap, const fields_t *fields)
 int print_string(va_list ap, const fields_t *fields)
 {
 	char *sp = va_arg(ap, char *);
-	int len;
+	unsigned int len, padding, precision;
 
-	for (len = _strlen(sp); len < fields->width; ++len)
+	if (fields->precision == UINT_MAX) /* no precision is provided */
+		padding = (fields->width > _strlen(sp)) ? fields->width - _strlen(sp) : 0;
+	else if (fields->width > fields->precision)
+		padding = fields->width - fields->precision;
+	else
+		padding = 0;
+
+	for (len = 0; len < padding; ++len)
 		_putchar(' ');
-	while (*sp)
-		_putchar(*sp++);
+	precision = fields->precision;
+	while (*sp && precision--)
+		len += _putchar(*sp++);
 	return len;
 }
 
@@ -26,7 +34,8 @@ int print_int(va_list ap, const fields_t *fields)
 {
 	long val;
 	char sval[CAPACITY] = { '\0' };
-	int len, sign;
+	unsigned int len;
+	int sign;
 
 	if (fields->is_h_mod)
 		val = (short) va_arg(ap, int);
@@ -55,7 +64,7 @@ int print_unsigned_int(va_list ap, const fields_t *fields)
 {
 	unsigned long val;
 	char sval[CAPACITY] = { '\0' };
-	int len;
+	unsigned int len;
 
 	if (fields->is_h_mod)
 		val = (unsigned short) va_arg(ap, unsigned int);
@@ -76,7 +85,7 @@ int print_octal(va_list ap, const fields_t *fields)
 {
 	unsigned long val;
 	char sval[CAPACITY] = { '\0' };
-	int len;
+	unsigned int len;
 
 	if (fields->is_h_mod)
 		val = (unsigned short) va_arg(ap, unsigned int);
@@ -109,7 +118,7 @@ int print_hex(va_list ap, const fields_t *fields, enum letcase letcase)
 {
 	char sval[CAPACITY] = { '\0' };
 	unsigned long val;
-	int len;
+	unsigned int len;
 
 	if (fields->is_h_mod)
 		val = (unsigned short) va_arg(ap, unsigned int);
@@ -139,7 +148,7 @@ int print_address(va_list ap, const fields_t *fields)
 {
 	char saddr[CAPACITY] = { '\0' };
 	unsigned long addr = va_arg(ap, unsigned long);
-	int len;
+	unsigned int len;
 
 	if (!addr)
 		return _puts_without_newline("(nil)");
