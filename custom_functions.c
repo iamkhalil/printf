@@ -22,8 +22,9 @@ int print_binary_rec(unsigned int x, unsigned int len)
  */
 int print_S(va_list ap, const fields_t *fields)
 {
+	(void)fields;
 	char *sval = va_arg(ap, char *);
-	unsigned int len = 0;
+	int len = 0, pad;
 
 	for (; *sval; ++sval) {
 		/* Convert non printable chars to hex */
@@ -31,7 +32,8 @@ int print_S(va_list ap, const fields_t *fields)
 			_puts_without_newline("\\x");
 			if (*sval <= 15)
 				_putchar('0');
-			print_hex(*sval, 1, UPPERCASE, fields);
+			pad = (*sval < 10) ? 0 : 'A' - ':';
+			_putchar(*sval + '0' + pad);
 			len += 4;
 			continue;
 		}

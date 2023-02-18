@@ -67,21 +67,22 @@ unsigned int _strlen(const char *s)
  * convert_number - Convert a number from one base to another.
  * @res: pointer to the resulting number
  * @n: the number to convert
- * @base: the desired base (decimal, octal)
+ * @base: the desired base
  *
- * Result: pointer to the resulting number res
+ * Result: pointer to the resulting number
  */
-char *convert_number(char *res, unsigned long n, unsigned short base)
+char *convert_number(char *res, unsigned long n, unsigned short base, enum letcase letcase)
 {
 	char number[CAPACITY] = { '\0' };
-	unsigned short i;
+	unsigned short i, padding;
 
 	i = 0;
+	padding = (letcase & UPPERCASE) ? 'A' - ':' : 'a' - ':';
 	while (n / base) {
-		number[i++] = n % base + '0';
+		number[i++] = (n % base < 10) ? n % base + '0' : n % base + padding + '0';
 		n /= base;
 	}
-	number[i] = n % base + '0';
+	number[i] = (n % base < 10) ? n % base + '0' : n % base + padding + '0';
 	reverse_array(number, i + 1);
 	return _strncpy(res, number, i + 1);
 }

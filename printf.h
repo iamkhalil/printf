@@ -6,8 +6,6 @@
 
 #define NULL ((void *)0)
 
-enum letcase { LOWERCASE, UPPERCASE };
-
 typedef struct fields {
         /* Flags */
         unsigned short is_plus   :1;
@@ -36,7 +34,7 @@ int print_int(va_list ap, const fields_t *fields);
 int print_unsigned_int(va_list ap, const fields_t *fields);
 int print_unsigned_int_rec(unsigned long ui, unsigned int len);
 int print_octal(va_list ap, const fields_t *fields);
-int print_hex(unsigned long ui, unsigned int size, enum letcase letcase, const fields_t *fields);
+int print_hex(va_list ap, const fields_t *fields, enum letcase letcase);
 int print_hex_uppercase(va_list ap, const fields_t *fields);
 int print_hex_lowercase(va_list ap, const fields_t *fields);
 int print_percent(va_list ap, const fields_t *fields);
