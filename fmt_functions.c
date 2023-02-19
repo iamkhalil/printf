@@ -1,6 +1,6 @@
 #include "printf.h"
 #include <stdlib.h>
-#include <stdio.h>
+
 int print_char(va_list ap, const fields_t *fields)
 {
 	int i;
@@ -15,13 +15,7 @@ int print_string(va_list ap, const fields_t *fields)
 	char *sp = va_arg(ap, char *);
 	unsigned int len, padding, precision;
 
-	if (fields->precision == UINT_MAX) /* no precision is provided */
-		padding = (fields->width > _strlen(sp)) ? fields->width - _strlen(sp) : 0;
-	else if (fields->width > fields->precision)
-		padding = fields->width - fields->precision;
-	else
-		padding = 0;
-
+	padding = get_padding(fields, _strlen(sp));
 	for (len = 0; len < padding; ++len)
 		_putchar(' ');
 	precision = fields->precision;
@@ -64,7 +58,7 @@ int print_unsigned_int(va_list ap, const fields_t *fields)
 {
 	unsigned long val;
 	char sval[CAPACITY] = { '\0' };
-	unsigned int len;
+	unsigned int len, padding, precision;
 
 	if (fields->is_h_mod)
 		val = (unsigned short) va_arg(ap, unsigned int);
@@ -75,8 +69,18 @@ int print_unsigned_int(va_list ap, const fields_t *fields)
 
 	convert_number(sval, val, 10, NONE);
 	len = _strlen(sval);
-	while (len < fields->width)
+	padding = get_padding(fields, len);
+	while (padding--)
 		len += _putchar(' ');
+
+	if (sval[0] == '0' && fields->precision == 0)
+		return len - 1;
+	if (sval[0] != '0' && fields->precision != UINT_MAX) {
+		precision = (fields->precision > _strlen(sval)) ?
+			     fields->precision - _strlen(sval) : 0;
+		while (precision--)
+			len += _putchar('0');
+	}
 	_puts_without_newline(sval);
 	return len;
 }
@@ -85,7 +89,7 @@ int print_octal(va_list ap, const fields_t *fields)
 {
 	unsigned long val;
 	char sval[CAPACITY] = { '\0' };
-	unsigned int len;
+	unsigned int len, padding, precision;
 
 	if (fields->is_h_mod)
 		val = (unsigned short) va_arg(ap, unsigned int);
@@ -96,8 +100,22 @@ int print_octal(va_list ap, const fields_t *fields)
 
 	convert_number(sval, val, 8, NONE);
 	len = _strlen(sval) + fields->is_hash;
-	while (len < fields->width)
+	padding = (fields->is_hash && sval[0] == '0') ?
+		   get_padding(fields, len) - 1 : get_padding(fields, len);
+	while (padding--)
 		len += _putchar(' ');
+
+	if (sval[0] != '0' && fields->precision != UINT_MAX) {
+		precision = (fields->precision > _strlen(sval) + fields->is_hash) ?
+			     fields->precision - (_strlen(sval) + fields->is_hash) : 0;
+		while (precision--)
+			len += _putchar('0');
+	}
+	if (sval[0] == '0' && fields->precision == 0) {
+		--len;
+		sval[0] = '\0';
+	}
+
 	if (fields->is_hash)
 		_putchar('0');
 	_puts_without_newline(sval);

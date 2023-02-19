@@ -127,3 +127,20 @@ void reset_fields(fields_t *fields)
 	fields->width	  = 0;
 	fields->precision = UINT_MAX;
 }
+
+/**
+ * get_padding - Calculate the padding
+ * @fields: pointer to a struct fields
+ * @len: length of the number
+ *
+ * Return: padding value.
+ */
+unsigned int get_padding(const fields_t *fields, unsigned int len)
+{
+	if (fields->precision == UINT_MAX) /* no precision is provided */
+		return (fields->width > len) ? fields->width - len : 0;
+	else if (fields->width > fields->precision)
+		return fields->width - fields->precision;
+	else
+		return 0;
+}

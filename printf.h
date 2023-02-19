@@ -54,5 +54,6 @@ int update_length_modifiers(fields_t *fields, char mod);
 int update_width(fields_t *fields, va_list ap, const char * const s);
 int update_precision(fields_t *fields, va_list ap, const char * const s);
 void reset_fields(fields_t *fields);
+unsigned int get_padding(const fields_t *fields, unsigned int len);
 
 #endif /* PRINTF_H */
