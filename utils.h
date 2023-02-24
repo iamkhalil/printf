@@ -5,7 +5,7 @@
 
 #define BUFSIZE  1024
 #define FLUSHBUF (-1)
-#define CAPACITY 32
+#define CAPACITY 50
 
 enum letcase { LOWERCASE, UPPERCASE, NONE };
 

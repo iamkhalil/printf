@@ -78,13 +78,12 @@ char *convert_number(char *res, unsigned long n, unsigned short base, enum letca
 
 	i = 0;
 	offset = (letcase & UPPERCASE) ? 'A' - ':' : 'a' - ':';
-	while (n / base) {
+	do {
 		number[i++] = (n % base < 10) ? n % base + '0' : n % base + offset + '0';
 		n /= base;
-	}
-	number[i] = (n % base < 10) ? n % base + '0' : n % base + offset + '0';
-	reverse_array(number, i + 1);
-	return _strncpy(res, number, i + 1);
+	} while (n);
+	reverse_array(number, i);
+	return _strncpy(res, number, i);
 }
 
 /**
