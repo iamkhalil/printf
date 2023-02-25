@@ -209,6 +209,8 @@ int main(void)
 	real = printf("Unsigned Hexadecimal precision, width, and flags:[%#5.2x]\n", 12);
 	mine = _printf("Unsigned Hexadecimal precision, width, and flags:[%#5.2x]\n", 12);
 	printf("Length:[%d, %d]\n", real, mine);
+	_printf("String reverse:[%r]\n", "ABCDEF");
+	_printf("String rot13:[%R]\n", "HELLO");
 
 	return 0;
 }

@@ -22,6 +22,8 @@ int (*get_fmt_func(char fmt))(va_list, const fields_t *)
 		{'S', print_S},
 		{'%', print_percent},
 		{'p', print_address},
+		{'r', print_rev},
+		{'R', print_rot13},
 		{'\0', NULL}
 	};
 	unsigned int i;

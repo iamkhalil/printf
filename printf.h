@@ -47,6 +47,8 @@ int print_address(va_list ap, const fields_t *fields);
 int print_binary(va_list ap, const fields_t *fields);
 int print_binary_rec(unsigned int x, unsigned int len);
 int print_S(va_list ap, const fields_t *fields);
+int print_rev(va_list ap, const fields_t *fields);
+int print_rot13(va_list ap, const fields_t *fields);
 
 /* fields handlers */
 int update_flags(fields_t *fields, char flag);

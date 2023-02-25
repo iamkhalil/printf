@@ -17,6 +17,7 @@ int print_binary_rec(unsigned int x, unsigned int len)
  * print_S - Print a string and convert any non-printable character to their
  * hexadecimal value.
  * @ap: argument pointer
+ * @fields: pointer to a struct fields
  *
  * Return: The number of characters printed
  */
@@ -38,6 +39,51 @@ int print_S(va_list ap, const fields_t *fields)
 			continue;
 		}
 		len += _putchar(*sval);
+	}
+	return len;
+}
+
+/**
+ * print_rev - Print a string, in reverse.
+ * @ap: argument pointer
+ * @fields: pointer to a struct fields
+ *
+ * Return: the number of characters printed
+ */
+int print_rev(va_list ap, const fields_t *fields)
+{
+	(void)fields;
+	char *sp = va_arg(ap, char *);
+	int len, i;
+
+	len = i = _strlen(sp);
+	while (i--)
+		_putchar(*(sp + i));
+	return len;
+}
+
+/**
+ * print_rot13 - print the rot13'ed string
+ * @ap: argument pointer
+ * @fields: pointer to a struct fields
+ *
+ * Return: The number of characters printed
+ */
+int print_rot13(va_list ap, const fields_t *fields)
+{
+	(void)fields;
+	const char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	const char mirror[]   = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+	const char *sp = va_arg(ap, char *);
+	unsigned int i, j, len = 0;
+
+	for (i = 0; sp[i]; ++i) {
+		for (j = 0; alphabet[j]; ++j) {
+			if (alphabet[j] == sp[i]) {
+				len += _putchar(mirror[j]);
+				break;
+			}
+		}
 	}
 	return len;
 }
