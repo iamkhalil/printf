@@ -84,6 +84,8 @@ int print_rot13(va_list ap, const fields_t *fields)
 				break;
 			}
 		}
+		if (j == sizeof(alphabet) - 1)
+			_putchar(sp[i]);
 	}
 	return i;
 }
