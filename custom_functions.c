@@ -75,15 +75,15 @@ int print_rot13(va_list ap, const fields_t *fields)
 	const char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	const char mirror[]   = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 	const char *sp = va_arg(ap, char *);
-	unsigned int i, j, len = 0;
+	unsigned int i, j;
 
 	for (i = 0; sp[i]; ++i) {
 		for (j = 0; alphabet[j]; ++j) {
 			if (alphabet[j] == sp[i]) {
-				len += _putchar(mirror[j]);
+				_putchar(mirror[j]);
 				break;
 			}
 		}
 	}
-	return len;
+	return i;
 }
