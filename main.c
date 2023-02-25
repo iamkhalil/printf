@@ -170,27 +170,45 @@ int main(void)
 	real = printf("Unsigned octal precision, width and flags:[%#4.o]\n", 0);
 	mine = _printf("Unsigned octal precision, width and flags:[%#4.o]\n", 0);
 	printf("Length:[%d, %d]\n", real, mine);
-	/* real = printf("Signed int:[%+2.d]\n", 0); */
-	/* mine = _printf("Signed int:[%+2.d]\n", 0); */
-	/* printf("Length:[%d, %d]\n", real, mine); */
-	/* real = printf("Signed int:[%+2.d]\n", 1); */
-	/* mine = _printf("Signed int:[%+2.d]\n", 1); */
-	/* printf("Length:[%d, %d]\n", real, mine); */
-	/* real = printf("Signed int:[% 2.d]\n", 1); */
-	/* mine = _printf("Signed int:[% 2.d]\n", 1); */
-	/* printf("Length:[%d, %d]\n", real, mine); */
-	/* real = printf("Signed int:[%2.d]\n", -1); */
-	/* mine = _printf("Signed int:[%2.d]\n", -1); */
-	/* printf("Length:[%d, %d]\n", real, mine); */
-	/* real = printf("Signed int:[%+4.2d]\n", 42); */
-	/* mine = _printf("Signed int:[%+4.2d]\n", 42); */
-	/* printf("Length:[%d, %d]\n", real, mine); */
-	/* real = printf("Signed int:[%.3d]\n", 42); */
-	/* mine = _printf("Signed int:[%.3d]\n", 42); */
-	/* printf("Length:[%d, %d]\n", real, mine); */
-	/* real = printf("Signed int:[%+10.3d]\n", 42); */
-	/* mine = _printf("Signed int:[%+10.3d]\n", 42); */
-	/* printf("Length:[%d, %d]\n", real, mine); */
+	real = printf("Signed int precision:[%.d]\n", 0);
+	mine = _printf("Signed int precision:[%.d]\n", 0);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int precision:[%.d]\n", 12);
+	mine = _printf("Signed int precision:[%.d]\n", 12);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int precision and width:[%4.1d]\n", 123);
+	mine = _printf("Signed int precision and width:[%4.1d]\n", 123);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int precision and width:[%+2.d]\n", 0);
+	mine = _printf("Signed int precision and width:[%+2.d]\n", 0);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int precision and width:[%+2.d]\n", 1);
+	mine = _printf("Signed int precision and width:[%+2.d]\n", 1);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int precision, width and flags:[% 2.d]\n", 1);
+	mine = _printf("Signed int precision, width and flags:[% 2.d]\n", 1);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int precision and width:[%2.d]\n", -1);
+	mine = _printf("Signed int precision and width:[%2.d]\n", -1);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int precision, width and flags:[%+4.2d]\n", 42);
+	mine = _printf("Signed int precision, width and flags:[%+4.2d]\n", 42);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int precision and width:[%.3d]\n", 42);
+	mine = _printf("Signed int precision and width:[%.3d]\n", 42);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int precision, width and flags:[%+5.3d]\n", 42);
+	mine = _printf("Signed int precision, width and flags:[%+5.3d]\n", 42);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Unsigned Hexadecimal precision:[%.x]\n", 0);
+	mine = _printf("Unsigned Hexadecimal precision:[%.x]\n", 0);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Unsigned Hexadecimal precision, width, and flags:[%#3.x]\n", -1);
+	mine = _printf("Unsigned Hexadecimal precision, width, and flags:[%#3.x]\n", -1);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Unsigned Hexadecimal precision, width, and flags:[%#5.2x]\n", 12);
+	mine = _printf("Unsigned Hexadecimal precision, width, and flags:[%#5.2x]\n", 12);
+	printf("Length:[%d, %d]\n", real, mine);
 
 	return 0;
 }

@@ -28,7 +28,7 @@ int print_int(va_list ap, const fields_t *fields)
 {
 	long val;
 	char sval[CAPACITY] = { '\0' };
-	unsigned int len;
+	unsigned int len, padding, precision, total_len;
 	int sign;
 
 	if (fields->is_h_mod)
@@ -40,18 +40,45 @@ int print_int(va_list ap, const fields_t *fields)
 
 	sign = (val < 0) ? (val = -val, -1) : 1;
 	convert_number(sval, val, 10, NONE);
-	len = _strlen(sval) + (fields->is_plus | fields->is_space | (sign < 0));
-	while (len < fields->width)
-		len += _putchar(' ');
+	len = _strlen(sval);
+	total_len = len + (fields->is_plus | fields->is_space | (sign < 0));
 
+	/* handle padding */
+	if (fields->precision == UINT_MAX) {
+		padding = (fields->width > total_len) ? fields->width - total_len : 0;
+	} else if (fields->precision == 0 && val == 0) {
+		padding = fields->width - (fields->is_plus | fields->is_space);
+	} else {
+		if (fields->precision > fields->width)
+			padding = 0;
+		else if (fields->precision < total_len)
+			padding = (fields->width > total_len) ? fields->width - total_len : 0;
+		else
+			padding = fields->width - total_len - (fields->precision - len);
+	}
+	while (padding--)
+		total_len += _putchar(' ');
+
+	/* handle flags */
 	if (sign < 0)
 		_putchar('-');
 	else if (fields->is_plus)
 		_putchar('+');
 	else if (fields->is_space)
 		_putchar(' ');
+
+	/* handle precision */
+	if (sval[0] != '0' && fields->precision != UINT_MAX) {
+		precision = (fields->precision > len) ? fields->precision - len : 0;
+		while (precision--)
+			total_len += _putchar('0');
+	}
+	if (sval[0] == '0' && fields->precision == 0) {
+		sval[0] = '\0';
+		--total_len;
+	}
 	_puts_without_newline(sval);
-	return len;
+	return total_len;
 }
 
 int print_unsigned_int(va_list ap, const fields_t *fields)
@@ -115,7 +142,6 @@ int print_octal(va_list ap, const fields_t *fields)
 		--len;
 		sval[0] = '\0';
 	}
-
 	if (fields->is_hash)
 		_putchar('0');
 	_puts_without_newline(sval);
@@ -136,7 +162,7 @@ int print_hex(va_list ap, const fields_t *fields, enum letcase letcase)
 {
 	char sval[CAPACITY] = { '\0' };
 	unsigned long val;
-	unsigned int len;
+	unsigned int len, precision = 0;
 
 	if (fields->is_h_mod)
 		val = (unsigned short) va_arg(ap, unsigned int);
@@ -147,10 +173,23 @@ int print_hex(va_list ap, const fields_t *fields, enum letcase letcase)
 
 	convert_number(sval, val, 16, letcase);
 	len = _strlen(sval) + ((fields->is_hash) ? 2 : 0);
-	while (len < fields->width)
+
+	/* handle padding */
+	if (fields->precision != UINT_MAX && fields->precision > _strlen(sval))
+		precision = fields->precision - _strlen(sval);
+	while (len + precision < fields->width)
 		len += _putchar(' ');
+
 	if (fields->is_hash)
 		_puts_without_newline((letcase & UPPERCASE) ? "0X" : "0x");
+
+	/* handle precision */
+	while (precision--)
+		len += _putchar('0');
+	if (sval[0] == '0' && fields->precision == 0) {
+		--len;
+		sval[0] = '\0';
+	}
 	_puts_without_newline(sval);
 	return len;
 }
