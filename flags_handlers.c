@@ -24,6 +24,10 @@ int update_flags(fields_t *fields, char flag)
 		fields->is_hash = 1;
 		ret = 1;
 		break;
+	case '0':
+		fields->is_zero = 1;
+		ret = 1;
+		break;
 	default:
 		ret = 0;
 		break;
@@ -122,6 +126,7 @@ void reset_fields(fields_t *fields)
 	fields->is_plus	  = 0;
 	fields->is_space  = 0;
 	fields->is_hash   = 0;
+	fields->is_zero	  = 0;
 	fields->is_l_mod  = 0;
 	fields->is_h_mod  = 0;
 	fields->width	  = 0;
@@ -140,7 +145,7 @@ unsigned int get_padding(const fields_t *fields, unsigned int len)
 	if (fields->precision == UINT_MAX) /* no precision is provided */
 		return (fields->width > len) ? fields->width - len : 0;
 	else if (fields->width > fields->precision)
-		return fields->width - fields->precision;
+		return fields->width - fields->precision - fields->is_zero;
 	else
 		return 0;
 }

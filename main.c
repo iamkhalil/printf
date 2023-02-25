@@ -209,8 +209,38 @@ int main(void)
 	real = printf("Unsigned Hexadecimal precision, width, and flags:[%#5.2x]\n", 12);
 	mine = _printf("Unsigned Hexadecimal precision, width, and flags:[%#5.2x]\n", 12);
 	printf("Length:[%d, %d]\n", real, mine);
-	_printf("String reverse:[%r]\n", "ABCDEF");
-	_printf("String rot13:[%R]\n", "Hello42");
+	_printf("Reverse:[%r]\n", "ABCDEF");
+	_printf("Rot13:[%R]\n", "Hello42");
+	real = printf("Signed int zero flag:[%02d]\n", 1);
+	mine = _printf("Signed int zero flag:[%02d]\n", 1);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int zero flag:[%0d]\n", 1);
+	mine = _printf("Signed int zero flag:[%0d]\n", 1);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int flags:[%03d]\n", -1);
+	mine = _printf("Signed int flags:[%03d]\n", -1);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Signed int flags:[%+03d]\n", 1);
+	mine = _printf("Signed int flags:[%+03d]\n", 1);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Unsigned int zero flag:[%03u]\n", 1);
+	mine = _printf("Unsigned int zero flag:[%03u]\n", 1);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Unsigned Hexadecimal zero flag:[%04X]\n", 10);
+	mine = _printf("Unsigned Hexadecimal zero flag:[%04X]\n", 10);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Unsigned Hexadecimal flags and width:[%#05x]\n", 12);
+	mine = _printf("Unsigned Hexadecimal flags and width:[%#05x]\n", 12);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Unsigned octal zero flag:[%04o]\n", 10);
+	mine = _printf("Unsigned octal zero flag:[%04o]\n", 10);
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("Unsigned octal flags and width:[%#03o]\n", 7);
+	mine = _printf("Unsigned octal flags and width:[%#03o]\n", 7);
+	printf("Length:[%d, %d]\n", real, mine);
+
+
+
 
 	return 0;
 }
