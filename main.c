@@ -239,8 +239,5 @@ int main(void)
 	mine = _printf("Unsigned octal flags and width:[%#03o]\n", 7);
 	printf("Length:[%d, %d]\n", real, mine);
 
-
-
-
 	return 0;
 }

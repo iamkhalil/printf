@@ -6,6 +6,15 @@
 #include "utils.h"
 
 #define NULL ((void *)0)
+#define CHECK_LENGTH_MOD(V, H, TH, CT, L, TL, T)    \
+        do {                                        \
+                if (H)                              \
+                        V = (CT) va_arg(ap, TH);    \
+                else if (L)                         \
+                        V = va_arg(ap, TL);         \
+                else                                \
+                        V = va_arg(ap, T);          \
+        } while (0)
 
 typedef struct fields {
         /* Flags */
@@ -57,6 +66,6 @@ int update_length_modifiers(fields_t *fields, char mod);
 int update_width(fields_t *fields, va_list ap, const char * const s);
 int update_precision(fields_t *fields, va_list ap, const char * const s);
 void reset_fields(fields_t *fields);
-unsigned int get_padding(const fields_t *fields, unsigned int len);
+unsigned int get_padding(const fields_t *fields, unsigned int length, char msb, short sign);
 
 #endif /* PRINTF_H */

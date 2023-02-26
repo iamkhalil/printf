@@ -134,18 +134,26 @@ void reset_fields(fields_t *fields)
 }
 
 /**
- * get_padding - Calculate the padding
+ * get_padding - Calculate the padding for numeric types.
  * @fields: pointer to a struct fields
  * @len: length of the number
+ * @msb: most significant byte (sval[0])
+ * @sign: the sign of the number. Always 1 for unsigned values.
  *
  * Return: padding value.
  */
-unsigned int get_padding(const fields_t *fields, unsigned int len)
+unsigned int get_padding(const fields_t *fields, unsigned int len, char msb, short sign)
 {
+	int flags = fields->is_plus | fields->is_space | (sign < 0) ;
+
 	if (fields->precision == UINT_MAX) /* no precision is provided */
-		return (fields->width > len) ? fields->width - len : 0;
+		return (fields->width > len + flags) ? fields->width - len - flags : 0;
+	else if (fields->precision == 0 && msb == '0')
+		return fields->width - (fields->is_plus | fields->is_space | fields->is_hash);
+	else if (fields->precision < len + flags)
+		return (fields->width > len + flags) ? fields->width - len - flags : 0;
 	else if (fields->width > fields->precision)
-		return fields->width - fields->precision - fields->is_zero;
+		return fields->width - fields->precision - flags;
 	else
 		return 0;
 }
