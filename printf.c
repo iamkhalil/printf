@@ -13,7 +13,7 @@ int _printf(const char *format, ...)
 	int (*fn)(va_list, const fields_t *);
 	va_list ap;
 	int nchars = 0;
-	fields_t fields = { 0, 0, 0, 0, 0, 0, 0, UINT_MAX };
+	fields_t fields = { 0, 0, 0, 0, 0, 0, 0, 0, UINT_MAX };
 
 	va_start(ap, format);
 	for (; *format; ++format) {

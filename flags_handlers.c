@@ -28,6 +28,10 @@ int update_flags(fields_t *fields, char flag)
 		fields->is_zero = 1;
 		ret = 1;
 		break;
+	case '-':
+		fields->is_minus = 1;
+		ret = 1;
+		break;
 	default:
 		ret = 0;
 		break;
@@ -127,6 +131,7 @@ void reset_fields(fields_t *fields)
 	fields->is_space  = 0;
 	fields->is_hash   = 0;
 	fields->is_zero	  = 0;
+	fields->is_minus  = 0;
 	fields->is_l_mod  = 0;
 	fields->is_h_mod  = 0;
 	fields->width	  = 0;

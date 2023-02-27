@@ -22,6 +22,7 @@ typedef struct fields {
         unsigned short is_space  :1;
         unsigned short is_hash   :1;
         unsigned short is_zero   :1;
+        unsigned short is_minus  :1;
         /* Length modifiers */
         unsigned short is_l_mod  :1;
         unsigned short is_h_mod  :1;
