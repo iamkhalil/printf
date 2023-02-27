@@ -1,6 +1,6 @@
 #include "printf.h"
 #include <stdlib.h>
-#include <stdio.h>
+
 int print_char(va_list ap, const fields_t *fields)
 {
 	int len = 0, i;
