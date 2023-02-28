@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -Wall -Wextra -Werror -pedantic -Wno-format -fsanitize=signed-integer-overflow
+CFLAGS= -Wall -Wextra -Werror -pedantic -fsanitize=signed-integer-overflow
 SRC= $(wildcard *.c)
 
 all: $(SRC)

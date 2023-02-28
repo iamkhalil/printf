@@ -20,7 +20,7 @@ int print_char(va_list ap, const fields_t *fields)
 int print_string(va_list ap, const fields_t *fields)
 {
 	char *sp = va_arg(ap, char *);
-	unsigned int len = 0, padding, precision;
+	unsigned int len = 0, padding, precision, threshold;
 
 	if (fields->precision == UINT_MAX) /* no precision is provided */
 		padding = (fields->width > _strlen(sp)) ? fields->width - _strlen(sp) : 0;
@@ -39,7 +39,12 @@ int print_string(va_list ap, const fields_t *fields)
 		len += _putchar(*sp++);
 		--precision;
 	}
-	while (precision--)
+
+	threshold = 0;
+	if (fields->precision != UINT_MAX && fields->precision > fields->width)
+		threshold = fields->precision - fields->width;
+
+	while (precision-- > threshold)
 		len += _putchar(' ');
 
 	if (fields->is_minus) {

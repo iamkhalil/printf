@@ -286,16 +286,19 @@ int main(void)
 	real = printf("Char minus flag:[%-5c]\n", 'c');
 	mine = _printf("Char minus flag:[%-5c]\n", 'c');
 	printf("Length:[%d, %d]\n", real, mine);
-	real = printf("Char minus flag:[%-5.4c%05c]\n", 'K', 'O');
-	mine = _printf("Char minus flag:[%-5.4c%05c]\n", 'K', 'O');
+	real = printf("Char minus flag:[%-5c%5c]\n", 'K', 'O');
+	mine = _printf("Char minus flag:[%-5c%5c]\n", 'K', 'O');
 	real = printf("String minus flag:[%-s]\n", "Hello");
 	mine = _printf("String minus flag:[%-s]\n", "Hello");
 	printf("Length:[%d, %d]\n", real, mine);
 	real = printf("String minus flag:[%-5s]\n", "World");
 	mine = _printf("String minus flag:[%-5s]\n", "World");
 	printf("Length:[%d, %d]\n", real, mine);
-	real = printf("String minus flag:[%-5.4s%05s]\n", "OK", "KO");
-	mine = _printf("String minus flag:[%-5.4s%05s]\n", "OK", "KO");
+	real = printf("String minus flag:[%-5.4s%5s]\n", "OK", "KO");
+	mine = _printf("String minus flag:[%-5.4s%5s]\n", "OK", "KO");
+	printf("Length:[%d, %d]\n", real, mine);
+	real = printf("String minus flag:[%-5.7s]\n", "End");
+	mine = _printf("String minus flag:[%-5.7s]\n", "End");
 	printf("Length:[%d, %d]\n", real, mine);
 
 	return 0;
