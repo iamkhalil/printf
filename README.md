@@ -6,12 +6,13 @@ some custom format specifiers.
 ## Description
 
 The `printf` function converts, formats, and writes it's arguments to `stdout`
-under the control of `format`. On success, it returns the number of characters
-written, or a negative value if an error occured. <br>
+under the control of `format`. <br>
+On success, it returns the number of characters written, or a negative 
+value if an error occured. <br>
 The `format` string contains two types of objects: ordinary characters, which are
 copied to the output stream, and format specifiers, each of which causes
 conversion and printing of the next successive argument to printf. <br>
-A `format `specifier follows this prototype: `%[flags][width][.precision][length]specifier`
+A `format` specifier follows this prototype: `%[flags][width][.precision][length]specifier`
 
 ## Features
 
