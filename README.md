@@ -7,7 +7,7 @@ some custom format specifiers.
 
 The `printf` function converts, formats, and writes it's arguments to `stdout`
 under the control of `format`. <br>
-On success, it returns the number of characters written, or a negative 
+On success, it returns the number of characters written, or a negative
 value if an error occured. <br>
 The `format` string contains two types of objects: ordinary characters, which are
 copied to the output stream, and format specifiers, each of which causes
@@ -74,7 +74,7 @@ $ gcc myapp.c -L. -lprintf -o myapp
 ```
 
 ## Examples
-```shell
+```
 $ cat myapp.c
 #include <stdio.h>
 #include "printf.h"
