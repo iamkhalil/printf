@@ -121,7 +121,7 @@ int main(void)
 	printf("Address:[%p]\n", addr);
 	_printf("Address:[%p]\n", addr);
 
-    printf("\nCustom format specifiers:\n");
+   	printf("\nCustom format specifiers:\n");
 	_printf(" Reverse:\t[%r]\n", "Live");
 	_printf(" Rot13:\t[%R]\n", "SHA");
 
